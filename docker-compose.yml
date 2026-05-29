@@ -1,0 +1,58 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: src/PricingEngine.Api/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__PricingDatabase: Host=postgres;Port=5432;Database=pricing_engine;Username=pricing_app;Password=pricing_app_password
+      RabbitMq__HostName: rabbitmq
+      RabbitMq__Port: 5672
+      RabbitMq__VirtualHost: /
+      RabbitMq__UserName: pricing_audit
+      RabbitMq__Password: pricing_audit_password
+      RabbitMq__QueueName: quote-audit
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: pricing_engine
+      POSTGRES_USER: pricing_app
+      POSTGRES_PASSWORD: pricing_app_password
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pricing_app -d pricing_engine"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - pricing-postgres:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: pricing_audit
+      RABBITMQ_DEFAULT_PASS: pricing_audit_password
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - pricing-rabbitmq:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  pricing-postgres:
+  pricing-rabbitmq:

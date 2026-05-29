@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/PricingEngine.Api/PricingEngine.Api.csproj" />
+    <Project Path="src/PricingEngine.Application/PricingEngine.Application.csproj" />
+    <Project Path="src/PricingEngine.Domain/PricingEngine.Domain.csproj" />
+    <Project Path="src/PricingEngine.Infrastructure/PricingEngine.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/PricingEngine.Tests/PricingEngine.Tests.csproj" />
+  </Folder>
+</Solution>

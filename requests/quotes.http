@@ -1,0 +1,27 @@
+@host = http://localhost:8080
+
+GET {{host}}/health
+Accept: application/json
+
+###
+
+POST {{host}}/quotes/
+Content-Type: application/json
+
+{
+  "productCode": "travel-basic",
+  "channel": "web",
+  "currency": "EUR",
+  "inputs": {
+    "insuredSum": 10000,
+    "durationDays": 7,
+    "package": "standard"
+  }
+}
+
+###
+
+@quoteId = replace-with-created-quote-id
+
+GET {{host}}/quotes/{{quoteId}}
+Accept: application/json

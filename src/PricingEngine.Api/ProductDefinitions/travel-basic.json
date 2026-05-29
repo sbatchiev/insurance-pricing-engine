@@ -1,0 +1,24 @@
+{
+  "id": "7ec1e772-f760-4bc3-9816-48d645463f82",
+  "code": "travel-basic",
+  "name": "Travel Basic",
+  "version": 1,
+  "isActive": true,
+  "inputSchema": {
+    "type": "object",
+    "required": ["insuredSum", "durationDays"],
+    "properties": {
+      "insuredSum": { "type": "number", "minimum": 1 },
+      "durationDays": { "type": "integer", "minimum": 1 },
+      "package": { "type": "string" }
+    }
+  },
+  "pricingConfig": {
+    "pricingModel": "insured_sum_tariff",
+    "insuredSumInput": "insuredSum",
+    "tariff": 0.015,
+    "fixedFee": 10.00,
+    "taxRate": 0.10,
+    "policyFee": 2.50
+  }
+}

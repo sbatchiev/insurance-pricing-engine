@@ -1,0 +1,27 @@
+@PricingEngine.Api_HostAddress = http://localhost:5163
+
+GET {{PricingEngine.Api_HostAddress}}/health
+Accept: application/json
+
+###
+
+POST {{PricingEngine.Api_HostAddress}}/quotes/
+Content-Type: application/json
+
+{
+  "productCode": "travel-basic",
+  "channel": "web",
+  "currency": "EUR",
+  "inputs": {
+    "insuredSum": 10000,
+    "durationDays": 7,
+    "package": "standard"
+  }
+}
+
+###
+
+@quoteId = replace-with-created-quote-id
+
+GET {{PricingEngine.Api_HostAddress}}/quotes/{{quoteId}}
+Accept: application/json
