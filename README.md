@@ -177,12 +177,10 @@ Installment schedules preserve the quote total exactly. Any rounding remainder i
 
 - A generated quote is an audit record; bind/purchase flow is out of scope.
 - Product definitions are loaded from JSON files for this proof-of-concept.
-- The active product definition with the highest version is used.
 - Full JSON Schema validation is a future improvement; strategies currently validate the inputs they need.
 - Monetary values are rounded to 2 decimal places.
 - Installments are monthly, starting from quote creation date.
 - PostgreSQL is the source of truth for audit records; RabbitMQ delivery is eventually consistent.
-- `EnsureCreated` is used for local setup; production would use migrations.
 - Authentication and authorization are out of scope.
 
 ## Adding a new product
